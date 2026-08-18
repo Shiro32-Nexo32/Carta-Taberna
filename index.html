@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1c1008" />
+    <meta name="description" content="La carta digital de La Taberna de RuMaku." />
+    <title>La Taberna de RuMaku | Carta</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="site-shell">
+      <section class="cover" id="inicio" aria-labelledby="cover-title">
+        <img class="cover-image" src="assets/carta/carta-1.webp" alt="Portada de La Taberna de RuMaku" />
+        <div class="cover-shade"></div>
+        <div class="cover-action">
+          <p class="eyebrow">Carta digital</p>
+          <h1 id="cover-title">La Taberna de <span>RuMaku</span></h1>
+          <p>Come, bebe y que la suerte te acompañe.</p>
+          <button class="open-menu" type="button" data-open-menu>🍺 Abrir carta</button>
+        </div>
+      </section>
+
+      <section class="menu" id="carta" aria-label="Carta de La Taberna de RuMaku" hidden>
+        <header class="topbar">
+          <button class="home-link" type="button" data-home aria-label="Volver a la portada">⌂ <span>Inicio</span></button>
+          <p class="brand">La Taberna de <strong>RuMaku</strong></p>
+          <span class="topbar-spacer" aria-hidden="true"></span>
+        </header>
+
+        <div class="menu-stage" id="menu-stage">
+          <img id="menu-page" class="menu-page" src="assets/carta/carta-1.webp" alt="Página 1 de la carta: portada" />
+        </div>
+
+        <nav class="page-controls" aria-label="Navegación de páginas">
+          <button id="previous-page" type="button">← <span>Anterior</span></button>
+          <output id="page-count" aria-live="polite">Página 1 / 6</output>
+          <button id="next-page" type="button"><span>Siguiente</span> →</button>
+        </nav>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
