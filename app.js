@@ -1,4 +1,4 @@
-const totalPages = 6;
+const totalPages = 5;
 let currentPage = 1;
 
 const cover = document.querySelector('.cover');
@@ -12,9 +12,8 @@ const pageDescriptions = [
   'Portada de La Taberna de RuMaku',
   'Página 2 de la carta: bebidas',
   'Página 3 de la carta: comidas',
-  'Página 4 de la carta: comidas',
-  'Página 5 de la carta: bocados y rápidos',
-  'Página 6 de la carta: postres, dulces y café',
+  'Página 4 de la carta: bocados, rápidos y especiales',
+  'Página 5 de la carta: postres, dulces y café',
 ];
 
 function showPage(page) {
@@ -44,7 +43,7 @@ function enableReadingMode() {
 }
 
 function disableReadingMode() {
-  document.documentElement.style.zoom = '100%';
+  document.documentElement.style.zoom = '50%';
 }
 
 function openMenu(page = 1) {
