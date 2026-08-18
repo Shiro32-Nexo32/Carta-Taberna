@@ -39,8 +39,12 @@ async function enterFullscreen() {
   }
 }
 
-function resetReadingMode() {
-  document.body.classList.remove('menu-reading');
+function enableReadingMode() {
+  document.documentElement.style.zoom = '40%';
+}
+
+function disableReadingMode() {
+  document.documentElement.style.zoom = '100%';
 }
 
 function openMenu(page = 1) {
@@ -51,16 +55,17 @@ function openMenu(page = 1) {
 
   history.replaceState(null, '', '#carta');
 
-  document.body.classList.add('menu-reading');
+  enableReadingMode();
 }
 
 document.querySelector('[data-open-menu]').addEventListener('click', async () => {
   openMenu();
+
   await enterFullscreen();
 });
 
 document.querySelector('[data-home]').addEventListener('click', async () => {
-  resetReadingMode();
+  disableReadingMode();
 
   menu.hidden = true;
   cover.hidden = false;
@@ -105,17 +110,11 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowRight') {
     showPage(currentPage + 1);
   }
-
-  if (event.key === 'Escape' && document.fullscreenElement) {
-    document.exitFullscreen();
-  }
 });
 
 document.addEventListener('fullscreenchange', () => {
-  if (document.fullscreenElement) {
-    document.body.classList.add('menu-reading');
-  } else {
-    resetReadingMode();
+  if (!document.fullscreenElement && !menu.hidden) {
+    disableReadingMode();
   }
 });
 
