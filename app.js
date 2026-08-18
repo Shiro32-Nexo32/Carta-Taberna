@@ -56,7 +56,6 @@ function openMenu(page = 1) {
 
 document.querySelector('[data-open-menu]').addEventListener('click', async () => {
   openMenu();
-
   await enterFullscreen();
 });
 
