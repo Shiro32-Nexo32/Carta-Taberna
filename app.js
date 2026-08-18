@@ -19,20 +19,14 @@ const pageDescriptions = [
 
 function showPage(page) {
   currentPage = Math.min(Math.max(page, 1), totalPages);
+
   menuPage.src = `assets/carta/carta-${currentPage}.webp`;
   menuPage.alt = pageDescriptions[currentPage - 1];
+
   pageCount.value = `Página ${currentPage} / ${totalPages}`;
+
   previousButton.disabled = currentPage === 1;
   nextButton.disabled = currentPage === totalPages;
-}
-
-function openMenu(page = 1) {
-  cover.hidden = true;
-  menu.hidden = false;
-  showPage(page);
-  history.replaceState(null, '', '#carta');
-
-  document.body.classList.add('menu-reading');
 }
 
 async function enterFullscreen() {
@@ -45,35 +39,87 @@ async function enterFullscreen() {
   }
 }
 
+function resetReadingMode() {
+  document.body.classList.remove('menu-reading');
+}
+
+function openMenu(page = 1) {
+  cover.hidden = true;
+  menu.hidden = false;
+
+  showPage(page);
+
+  history.replaceState(null, '', '#carta');
+
+  document.body.classList.add('menu-reading');
+}
+
 document.querySelector('[data-open-menu]').addEventListener('click', async () => {
   openMenu();
+
   await enterFullscreen();
 });
 
-document.querySelector('[data-home]').addEventListener('click', () => {
+document.querySelector('[data-home]').addEventListener('click', async () => {
+  resetReadingMode();
+
   menu.hidden = true;
   cover.hidden = false;
+
   history.replaceState(null, '', '#inicio');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (document.fullscreenElement && document.exitFullscreen) {
+    try {
+      await document.exitFullscreen();
+    } catch (error) {
+      console.warn('No se pudo salir de pantalla completa:', error);
+    }
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 });
 
-previousButton.addEventListener('click', () => showPage(currentPage - 1));
-nextButton.addEventListener('click', () => showPage(currentPage + 1));
+previousButton.addEventListener('click', () => {
+  showPage(currentPage - 1);
+});
+
+nextButton.addEventListener('click', () => {
+  showPage(currentPage + 1);
+});
+
 document.querySelectorAll('[data-page]').forEach((button) => {
-  button.addEventListener('click', () => showPage(Number(button.dataset.page)));
+  button.addEventListener('click', () => {
+    showPage(Number(button.dataset.page));
+  });
 });
 
 document.addEventListener('keydown', (event) => {
   if (menu.hidden) return;
-  if (event.key === 'ArrowLeft') showPage(currentPage - 1);
-  if (event.key === 'ArrowRight') showPage(currentPage + 1);
+
+  if (event.key === 'ArrowLeft') {
+    showPage(currentPage - 1);
+  }
+
+  if (event.key === 'ArrowRight') {
+    showPage(currentPage + 1);
+  }
+
+  if (event.key === 'Escape' && document.fullscreenElement) {
+    document.exitFullscreen();
+  }
 });
 
-if (location.hash === '#carta') openMenu();
 document.addEventListener('fullscreenchange', () => {
   if (document.fullscreenElement) {
     document.body.classList.add('menu-reading');
   } else {
-    document.body.classList.remove('menu-reading');
+    resetReadingMode();
   }
 });
+
+if (location.hash === '#carta') {
+  openMenu();
+}
