@@ -115,3 +115,12 @@ button:focus-visible { outline: 3px solid #ffe097; outline-offset: 3px; }
 }
 
 @media (max-height: 680px) and (min-width: 521px) { .menu-stage { height: calc(100svh - 10rem); } }
+
+body.menu-reading .menu-stage {
+  transform: scale(0.5);
+  transform-origin: center center;
+}
+
+body.menu-reading .menu {
+  overflow: hidden;
+}
